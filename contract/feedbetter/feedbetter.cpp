@@ -83,7 +83,11 @@ void feedbetter::createsurvey(uint64_t survey_id,
                 account_name issuer,
                 time date_start,
                 time date_end,
-                string content)
+                uint64_t category,
+                string question,
+                uint64_t age,
+                uint64_t gender,
+                string answer)
 {
     require_auth(issuer);
     eosio_assert( is_account( issuer ), "issuer account does not exist");
@@ -91,8 +95,13 @@ void feedbetter::createsurvey(uint64_t survey_id,
     eosio_assert( date_end > now(), "date_end can not be smaller then now." );
     eosio_assert( date_end > date_start, "date_end can not be smaller then date_start." );
     
-    eosio_assert( content.size() > 0, "content can not be empty" );
+    eosio_assert( category <= 5, "category can not be bigger than 5" );
+    eosio_assert( question.size() > 0, "question can not be empty" );
+    eosio_assert( age <= 4, "age can not be bigger than 4" );
+    eosio_assert( gender <= 2, "age can not be bigger than 2" );
+    eosio_assert( answer.size() > 0, "question can not be empty" );
 
+    // Add surveys
     surveys svs( _self, survey_id );
     svs.emplace(_self, [&]( auto& sv) {
         sv.id = svs.available_primary_key();
@@ -100,7 +109,10 @@ void feedbetter::createsurvey(uint64_t survey_id,
         sv.issuer = issuer;
         sv.date_start = date_start;
         sv.date_end = date_end;
-        sv.content = content;
+        sv.category = category;
+        sv.question = question;
+        sv.age = age;
+        sv.gender = gender;
         sv.date_created = now();
     });
     surveys svs2( _self, issuer );
@@ -110,38 +122,77 @@ void feedbetter::createsurvey(uint64_t survey_id,
         sv.issuer = issuer;
         sv.date_start = date_start;
         sv.date_end = date_end;
-        sv.content = content;
+        sv.category = category;
+        sv.question = question;
+        sv.age = age;
+        sv.gender = gender;
         sv.date_created = now();
     });
+    surveys svs3( _self, category );
+    svs3.emplace(_self, [&]( auto& sv) {
+        sv.id = svs3.available_primary_key();
+        sv.survey_id = survey_id;
+        sv.issuer = issuer;
+        sv.date_start = date_start;
+        sv.date_end = date_end;
+        sv.category = category;
+        sv.question = question;
+        sv.age = age;
+        sv.gender = gender;
+        sv.date_created = now();
+    });
+
+    // Add answers
+    surveyanss sas(_self, survey_id);
+    string delimiter = "/!@#$%^&*()/";
+    size_t pos = 0;
+    string token;
+    while ((pos = answer.find(delimiter)) != string::npos) {
+        token = answer.substr(0, pos);
+
+        sas.emplace(_self, [&]( auto& sa) {
+            sa.id = sas.available_primary_key();
+            sa.survey_id = survey_id;
+            sa.answer = token;
+            sa.date_created = now();
+        });
+
+        answer.erase(0, pos + delimiter.length());
+    }
 }
 
 void feedbetter::submitsurvey(account_name voter,
                         uint64_t survey_id,
-                        string answer)
+                        uint64_t answer_id)
 {
     require_auth(voter);
     eosio_assert( is_account( voter ), "voter account does not exist");
 
-    eosio_assert( answer.size() > 0, "answer can not be empty" );
-
-    surveys svs( _self, _self );
+    surveys svs( _self, survey_id );
     const auto& sv = svs.find( survey_id );
     eosio_assert( sv != svs.end(), "survey doesn't exist" );
 
+    surveyanss sas( _self, survey_id );
+    const auto& sa = sas.find( answer_id );
+    eosio_assert( sa != sas.end(), "survey answer_id doesn't exist" );
+
     surveyress srs( _self, survey_id );
+    surveyress srs2( _self, voter );
+    const auto& srs2t = srs2.find( voter );
+    eosio_assert( srs2t == srs2.end(), "voter alreay survey" );
+
     srs.emplace(_self, [&]( auto& sr) {
         sr.id = srs.available_primary_key();
         sr.survey_id = survey_id;
         sr.voter = voter;
-        sr.answer = answer;
+        sr.answer_id = answer_id;
         sr.date_created = now();
     });
-    surveyress srs2( _self, voter );
     srs2.emplace(_self, [&]( auto& sr) {
         sr.id = srs2.available_primary_key();
         sr.survey_id = survey_id;
         sr.voter = voter;
-        sr.answer = answer;
+        sr.answer_id = answer_id;
         sr.date_created = now();
     });
 }

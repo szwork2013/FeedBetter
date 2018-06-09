@@ -9,10 +9,10 @@ cleos wallet import 5JtgfN7Gzcv5b3Dqb3JiJvsgLSPGV8Yw75NNkRaR33Hn3oE4FEx
 cleos wallet import 5JviYP3LweL43gWycLdTUeP3Hf5Zm4U8er52jR1cDPG5ctsq9Sg
 
 cleos create account eosio eosio.system EOS71sxVzNPTMGFw5pPxe1wPHLvFdrh3geKf1g2g67uzNgvEpH3DQ EOS71sxVzNPTMGFw5pPxe1wPHLvFdrh3geKf1g2g67uzNgvEpH3DQ
-cleos set contract eosio.system ./contracts/eosio.system -p eosio.system
+cleos set contract eosio.system ~/eos/build/contracts/eosio.system -p eosio.system
 
 cleos create account eosio eosio.token EOS71sxVzNPTMGFw5pPxe1wPHLvFdrh3geKf1g2g67uzNgvEpH3DQ EOS71sxVzNPTMGFw5pPxe1wPHLvFdrh3geKf1g2g67uzNgvEpH3DQ
-cleos set contract eosio.token ./contracts/eosio.token -p eosio.token
+cleos set contract eosio.token ~/eos/build/contracts/eosio.token -p eosio.token
 
 cleos create account eosio feedbetter EOS71sxVzNPTMGFw5pPxe1wPHLvFdrh3geKf1g2g67uzNgvEpH3DQ EOS71sxVzNPTMGFw5pPxe1wPHLvFdrh3geKf1g2g67uzNgvEpH3DQ
 

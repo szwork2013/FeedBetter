@@ -36,12 +36,16 @@ public:
                 account_name issuer,
                 time date_start,
                 time date_end,
-                string content);
+                uint64_t category,
+                string question,
+                uint64_t age,
+                uint64_t gender,
+                string answer);
 
     // @abi action
     void submitsurvey(account_name voter,
                         uint64_t survey_id,
-                        string answer);
+                        uint64_t answer_id);
 
 private:
 
@@ -94,12 +98,27 @@ private:
         account_name  issuer;
         time          date_start;
         time          date_end;
-        string        content;
+        uint64_t      category;
+        string        question;
+        uint64_t      age;
+        uint64_t      gender;
         time          date_created;
 
         uint64_t primary_key()const { return id; }
 
-        EOSLIB_SERIALIZE( survey, (id)(survey_id)(issuer)(date_start)(date_end)(content)(date_created) )
+        EOSLIB_SERIALIZE( survey, (id)(survey_id)(issuer)(date_start)(date_end)(category)(question)(age)(gender)(date_created) )
+    };
+
+    // @abi table surveyanss i64
+    struct surveyans {
+        uint64_t      id;
+        uint64_t      survey_id;
+        string        answer;
+        time          date_created;
+
+        uint64_t primary_key()const { return id; }
+
+        EOSLIB_SERIALIZE( surveyans, (id)(survey_id)(answer)(date_created) )
     };
 
     // @abi table surveyress i64
@@ -107,18 +126,19 @@ private:
         uint64_t      id;
         uint64_t      survey_id;
         account_name  voter;
-        string        answer;
+        uint64_t      answer_id;
         time          date_created;
 
         uint64_t primary_key()const { return id; }
 
-        EOSLIB_SERIALIZE( surveyres, (id)(survey_id)(voter)(answer)(date_created) )
+        EOSLIB_SERIALIZE( surveyres, (id)(survey_id)(voter)(answer_id)(date_created) )
     };
 
     typedef eosio::multi_index<N(accounts), account> accounts;
     typedef eosio::multi_index<N(stats), stat> stats;
     typedef eosio::multi_index<N(transactions), transaction> transactions;
     typedef eosio::multi_index<N(surveys), survey> surveys;
+    typedef eosio::multi_index<N(surveyanss), surveyans> surveyanss;
     typedef eosio::multi_index<N(surveyress), surveyres> surveyress;
 
     void sub_balance( account_name owner, asset value );
