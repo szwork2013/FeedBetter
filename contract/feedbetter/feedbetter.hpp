@@ -60,7 +60,7 @@ private:
         EOSLIB_SERIALIZE( account, (balance) )
     };
 
-    // @abi table stats i64
+    // @abi table stat i64
     struct stat {
         asset          supply;
         asset          max_supply;
