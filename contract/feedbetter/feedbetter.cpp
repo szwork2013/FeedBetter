@@ -159,9 +159,9 @@ void feedbetter::createsurvey(uint64_t survey_id,
             sa.image_link = img;
             sa.date_created = now();
         });
-        surveyanss sas(_self, issuer);
-        sas.emplace(_self, [&]( auto& sa) {
-            sa.id = sas.available_primary_key();
+        surveyanss sas2(_self, issuer);
+        sas2.emplace(_self, [&]( auto& sa) {
+            sa.id = sas2.available_primary_key();
             sa.survey_id = survey_id;
             sa.issuer = issuer;
             sa.answer = ans;
