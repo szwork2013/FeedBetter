@@ -272,11 +272,9 @@ void feedbetter::submitsurvey(account_name voter,
     });
 
     surveycharts scs( _self, survey_id );
-    const auto _chart = scs.find(survey_id);
-    eosio_assert( _chart != scs.end(), "no chart" );
-    const auto& chart = *_chart;
+    const auto& chart = scs.get(survey_id, "no chart..");
 
-    scs.modify(chart, survey_id, [&]( auto& sc) {
+    scs.modify(chart, _self, [&]( auto& sc) {
         if(answer_id == 0) {
             sc.answer1 = sc.answer1+1;
         }
