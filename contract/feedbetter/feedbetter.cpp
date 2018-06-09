@@ -240,15 +240,11 @@ void feedbetter::submitsurvey(account_name voter,
     require_auth(voter);
     eosio_assert( is_account( voter ), "voter account does not exist");
 
-    // surveys svs( _self, survey_id );
-    // const auto _sv = svs.begin();
-    // eosio_assert( _sv != svs.end(), "no survey" );
-    // const auto& sv = *_sv;
+    surveys svs( _self, survey_id );
+    const auto& sv = svs.get(0, "no survey..");
 
-    // surveyanss sas( _self, survey_id );
-    // const auto _sa = sas.begin();
-    // eosio_assert( _sa != sas.end(), "no answer" );
-    // const auto& sa = *_sa;
+    surveyanss sas( _self, survey_id );
+    const auto& sa = sas.get(0, "no answer..");
 
     surveyress srs( _self, survey_id );
     surveyress srs2( _self, voter );
