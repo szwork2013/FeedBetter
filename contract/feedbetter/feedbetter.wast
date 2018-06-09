@@ -1165,19 +1165,19 @@
   )
   (i64.store offset=8
    (get_local $7)
-   (i64.const 1128416776)
+   (i64.const 1128416772)
   )
   (i64.store
    (get_local $7)
-   (i64.const 100000000)
+   (i64.const 100000000000)
   )
   (i64.store offset=16
    (get_local $7)
-   (i64.const 100000000)
+   (i64.const 100000000000)
   )
   (i64.store offset=24
    (get_local $7)
-   (i64.const 1128416776)
+   (i64.const 1128416772)
   )
   (i64.store offset=32
    (get_local $7)
@@ -1378,22 +1378,22 @@
   )
   (i64.store offset=24
    (get_local $8)
-   (i64.const 1128416776)
+   (i64.const 1128416772)
   )
   (i64.store
    (i32.add
     (get_local $8)
     (i32.const 8)
    )
-   (i64.const 1128416776)
+   (i64.const 1128416772)
   )
   (i64.store offset=16
    (get_local $8)
-   (i64.const 100000000)
+   (i64.const 100000000000)
   )
   (i64.store
    (get_local $8)
-   (i64.const 100000000)
+   (i64.const 100000000000)
   )
   (call $_ZN10feedbetter11add_balanceEyN5eosio5assetEy
    (get_local $0)
