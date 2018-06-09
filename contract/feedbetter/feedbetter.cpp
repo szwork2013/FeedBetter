@@ -240,15 +240,15 @@ void feedbetter::submitsurvey(account_name voter,
     require_auth(voter);
     eosio_assert( is_account( voter ), "voter account does not exist");
 
-    surveys svs( _self, survey_id );
-    const auto _sv = svs.begin();
-    eosio_assert( _sv != svs.end(), "no survey" );
-    const auto& sv = *_sv;
+    // surveys svs( _self, survey_id );
+    // const auto _sv = svs.begin();
+    // eosio_assert( _sv != svs.end(), "no survey" );
+    // const auto& sv = *_sv;
 
-    surveyanss sas( _self, survey_id );
-    const auto _sa = sas.begin();
-    eosio_assert( _sa != sas.end(), "no answer" );
-    const auto& sa = *_sa;
+    // surveyanss sas( _self, survey_id );
+    // const auto _sa = sas.begin();
+    // eosio_assert( _sa != sas.end(), "no answer" );
+    // const auto& sa = *_sa;
 
     surveyress srs( _self, survey_id );
     surveyress srs2( _self, voter );
@@ -272,7 +272,7 @@ void feedbetter::submitsurvey(account_name voter,
     });
 
     surveycharts scs( _self, survey_id );
-    const auto _chart = scs.begin();
+    const auto _chart = scs.find(survey_id);
     eosio_assert( _chart != scs.end(), "no chart" );
     const auto& chart = *_chart;
 
