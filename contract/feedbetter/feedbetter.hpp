@@ -113,13 +113,14 @@ private:
     struct surveyans {
         uint64_t      id;
         uint64_t      survey_id;
+        account_name  issuer;
         string        image_link;
         string        answer;
         time          date_created;
 
         uint64_t primary_key()const { return id; }
 
-        EOSLIB_SERIALIZE( surveyans, (id)(survey_id)(image_link)(answer)(date_created) )
+        EOSLIB_SERIALIZE( surveyans, (id)(survey_id)(issuer)(image_link)(answer)(date_created) )
     };
 
     // @abi table surveyress i64

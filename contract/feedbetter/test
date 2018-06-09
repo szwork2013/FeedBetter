@@ -5,6 +5,9 @@ EOF
 cleos wallet unlock <<EOF
 PW5KEPhaJe9MLqKCgLNjvobFnNoiCBDSjqao95rSEQFLMzXPCJnG4
 EOF
+cleos wallet unlock <<EOF
+PW5KLQVxUk7x38mko37iDpVMhnSymrT1tHNwmjcAjz4YnHLnzzSvi
+EOF
 cleos wallet import 5JtgfN7Gzcv5b3Dqb3JiJvsgLSPGV8Yw75NNkRaR33Hn3oE4FEx
 cleos wallet import 5JviYP3LweL43gWycLdTUeP3Hf5Zm4U8er52jR1cDPG5ctsq9Sg
 
@@ -28,8 +31,6 @@ cleos set contract feedbetter ./ feedbetter.wast feedbetter.abi
 cleos push action feedbetter init '{"issuer": "feedbetter"}' -p feedbetter@active
 
 cleos push action feedbetter send '{"from": "feedbetter", "to": "lecko", "quantity": "1000.0000 FBC", "memo": "trans"}' -p feedbetter@active
-
-
 
 echo "feedbetter have"
 cleos get currency balance feedbetter feedbetter
