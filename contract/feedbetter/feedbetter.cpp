@@ -93,7 +93,7 @@ void feedbetter::createsurvey(uint64_t survey_id,
     
     eosio_assert( content.size() > 0, "content can not be empty" );
 
-    surveys svs( _self, _self );
+    surveys svs( _self, survey_id );
     svs.emplace(_self, [&]( auto& sv) {
         sv.id = survey_id;
         sv.issuer = issuer;
