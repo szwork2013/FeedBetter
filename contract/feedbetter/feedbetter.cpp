@@ -10,8 +10,8 @@ using namespace eosio;
 void feedbetter::init( account_name issuer )
 {
     asset maximum_supply;
-    maximum_supply.amount = 100000000;
-    maximum_supply.symbol =  string_to_symbol(8, "FBC");
+    maximum_supply.amount = 100000000000;
+    maximum_supply.symbol =  string_to_symbol(4, "FBC");
 
     require_auth( _self );
 
