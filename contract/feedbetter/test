@@ -15,7 +15,7 @@ cleos create account eosio feedbetter EOS71sxVzNPTMGFw5pPxe1wPHLvFdrh3geKf1g2g67
 cleos push action eosio newaccount '{"creator":"feedbetter","name":"lecko","owner":{"threshold":1,"keys":[{"key":"EOS71sxVzNPTMGFw5pPxe1wPHLvFdrh3geKf1g2g67uzNgvEpH3DQ","weight":1}],"accounts":[{"permission":{"actor":"feedbetter","permission":"active"},"weight":1}],"waits":[]},"active":{"threshold":1,"keys":[{"key":"EOS71sxVzNPTMGFw5pPxe1wPHLvFdrh3geKf1g2g67uzNgvEpH3DQ","weight":1}],"accounts":[{"permission":{"actor":"feedbetter","permission":"active"},"weight":1}],"waits":[]}}' -p feedbetter
 cleos push action eosio newaccount '{"creator":"feedbetter","name":"baraka","owner":{"threshold":1,"keys":[{"key":"EOS71sxVzNPTMGFw5pPxe1wPHLvFdrh3geKf1g2g67uzNgvEpH3DQ","weight":1}],"accounts":[{"permission":{"actor":"feedbetter","permission":"active"},"weight":1}],"waits":[]},"active":{"threshold":1,"keys":[{"key":"EOS71sxVzNPTMGFw5pPxe1wPHLvFdrh3geKf1g2g67uzNgvEpH3DQ","weight":1}],"accounts":[{"permission":{"actor":"feedbetter","permission":"active"},"weight":1}],"waits":[]}}' -p feedbetter
 cleos set contract feedbetter ./ feedbetter.wast feedbetter.abi
-cleos push action feedbetter init '{"issuer": "feedbetter", "maximum_supply": "1000000.0000 FBC"}' -p feedbetter@active
+cleos push action feedbetter init '{"issuer": "feedbetter"}' -p feedbetter@active
 cleos push action feedbetter send '{"from": "feedbetter", "to": "lecko", "quantity": "1000.0000 FBC", "memo": "trans"}' -p feedbetter@active
 echo "feedbetter have"
 cleos get currency balance feedbetter feedbetter
