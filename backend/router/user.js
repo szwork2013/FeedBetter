@@ -77,7 +77,7 @@ module.exports = function(router) {
 	});
 
 	router.get('/balance', function(req, res) {
-		contract.getBalance(req.eos, 'feedbetter', function(row) {
+		contract.getBalance(req.eos, req.user.user_wallet_address, function(row) {
 			if(row.rows) {
 				req.response(covertQuantityToArray(row.rows[0].balance));
 			} else {
@@ -92,7 +92,9 @@ module.exports = function(router) {
 				for (var i = row.rows.length - 1; i >= 0; i--) {
 					row.rows[i]['quantity_array'] = covertQuantityToArray(row.rows[i]['quantity']);
 				}
-				req.response(row.rows);
+				req.response({
+					transactions: row.rows
+				});
 			} else {
 				req.response();
 			}

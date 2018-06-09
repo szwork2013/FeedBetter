@@ -4,7 +4,6 @@ const contract_name = 'feedbetter';
 const symbol = "FBC";
 
 function amountToQuantity(amount) {
-	console.log(sprintf('%.04f %s', amount, symbol));
 	return sprintf('%.04f %s', amount, symbol);
 }
 
@@ -41,14 +40,25 @@ module.exports = {
 			func();
 		});
 	},
-	createsurvey: function(eos, survey_id, issuer, date_start, date_end, content, func) {
+	createsurvey: function(eos, survey_id, issuer, date_start, date_end, category, question, age, gender, answer1, image1, answer2, image2, answer3, image3, answer4, image4, func) {
 		eos.contract(contract_name).then(contract => {
 			contract.createsurvey({
 				survey_id: survey_id,
 				issuer: issuer,
 				date_start: date_start,
 				date_end: date_end,
-				content: content
+				category: category ? category : 0,
+				question: question,
+				age: age ? age : 0,
+				gender: gender ? gender : 0,
+				answer1: answer1,
+				image1: image1,
+				answer2: answer2,
+				image2: image2,
+				answer3: answer3,
+				image3: image3,
+				answer4: answer4,
+				image4: image4,
 			},
 			{
 				authorization: [{
@@ -60,12 +70,12 @@ module.exports = {
 			func();
 		});
 	},
-	submitsurvey: function(eos, voter, survey_id, answer, func) {
+	submitsurvey: function(eos, voter, survey_id, answer_id, func) {
 		eos.contract(contract_name).then(contract => {
 			contract.submitsurvey({
 				voter: voter,
 				survey_id: survey_id,
-				answer: answer
+				answer_id: answer_id
 			},
 			{
 				authorization: [{
@@ -91,5 +101,11 @@ module.exports = {
 	},
 	getSurveyresByUser: function(eos, account, func) {
 		getTableRows(eos, 'surveyress', account, func);
+	},
+	getSurveyAnswer: function(eos, survey_id, func) {
+		getTableRows(eos, 'surveyanss', survey_id, func);
+	},
+	getSurveyChart: function(eos, survey_id, func) {
+		getTableRows(eos, 'surveycharts', survey_id, func);
 	}
 };
