@@ -1,0 +1,19 @@
+{
+  "name": "feedbetter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "binaryen": "^37.0.0",
+    "eosjs": "^14.1.0",
+    "express": "^4.16.3",
+    "knex": "^0.14.6",
+    "mysql": "^2.15.0"
+  }
+}

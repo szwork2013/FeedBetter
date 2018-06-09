@@ -1,0 +1,2 @@
+eosiocpp -o feedbetter.wast feedbetter.cpp
+eosiocpp -g feedbetter.abi feedbetter.cpp
