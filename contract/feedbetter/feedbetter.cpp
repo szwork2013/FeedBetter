@@ -137,6 +137,19 @@ void feedbetter::createsurvey(uint64_t survey_id,
         sv.date_created = now();
     });
 
+    // Add chart
+    surveycharts scs( _self, survey_id );
+    scs.emplace(_self, [&]( auto& sc) {
+        sc.id = scs.available_primary_key();
+        sc.survey_id = survey_id;
+        sc.issuer = issuer;
+        sc.answer1 = 0;
+        sc.answer2 = 0;
+        sc.answer3 = 0;
+        sc.answer4 = 0;
+        sc.date_created = now();
+    });
+
     // Add answers
     if (image1.size() > 0 && answer1.size() > 0) {
         surveyanss sas(_self, survey_id);
@@ -253,6 +266,24 @@ void feedbetter::submitsurvey(account_name voter,
         sr.voter = voter;
         sr.answer_id = answer_id;
         sr.date_created = now();
+    });
+
+    surveycharts scs( _self, survey_id );
+    const auto& chart = scs.get(survey_id, "no chart object found");
+
+    scs.modify(chart, survey_id, [&]( auto& sc) {
+        if(answer_id == 0) {
+            sc.answer1 = sc.answer1+1;
+        }
+        if(answer_id == 1) {
+            sc.answer2 = sc.answer2+1;
+        }
+        if(answer_id == 2) {
+            sc.answer3 = sc.answer3+1;
+        }
+        if(answer_id == 3) {
+            sc.answer4 = sc.answer4+1;
+        }
     });
 }
 

@@ -143,12 +143,29 @@ private:
         EOSLIB_SERIALIZE( surveyres, (id)(survey_id)(voter)(answer_id)(date_created) )
     };
 
+    // @abi table surveycharts i64
+    struct surveychart {
+        uint64_t      id;
+        uint64_t      survey_id;
+        account_name  issuer;
+        uint64_t      answer1;
+        uint64_t      answer2;
+        uint64_t      answer3;
+        uint64_t      answer4;
+        time          date_created;
+
+        uint64_t primary_key()const { return id; }
+
+        EOSLIB_SERIALIZE( surveychart, (id)(survey_id)(issuer)(answer1)(answer2)(answer3)(answer4)(date_created) )
+    };
+
     typedef eosio::multi_index<N(accounts), account> accounts;
     typedef eosio::multi_index<N(stats), stat> stats;
     typedef eosio::multi_index<N(transactions), transaction> transactions;
     typedef eosio::multi_index<N(surveys), survey> surveys;
     typedef eosio::multi_index<N(surveyanss), surveyans> surveyanss;
     typedef eosio::multi_index<N(surveyress), surveyres> surveyress;
+    typedef eosio::multi_index<N(surveycharts), surveychart> surveycharts;
 
     void sub_balance( account_name owner, asset value );
     void add_balance( account_name owner, asset value, account_name ram_payer );
