@@ -79,7 +79,8 @@ void feedbetter::send( account_name from,
     });
 }
 
-void feedbetter::createsurvey(account_name issuer,
+void feedbetter::createsurvey(uint64_t survey_id,
+                account_name issuer,
                 time date_start,
                 time date_end,
                 string content)
@@ -89,10 +90,21 @@ void feedbetter::createsurvey(account_name issuer,
 
     eosio_assert( date_end > now(), "date_end can not be smaller then now." );
     eosio_assert( date_end > date_start, "date_end can not be smaller then date_start." );
+    
+    eosio_assert( content.size() > 0, "content can not be empty" );
 
     surveys svs( _self, _self );
     svs.emplace(_self, [&]( auto& sv) {
-        sv.id = svs.available_primary_key();
+        sv.id = survey_id;
+        sv.issuer = issuer;
+        sv.date_start = date_start;
+        sv.date_end = date_end;
+        sv.content = content;
+        sv.date_created = now();
+    });
+    surveys svs2( _self, issuer );
+    svs2.emplace(_self, [&]( auto& sv) {
+        sv.id = survey_id;
         sv.issuer = issuer;
         sv.date_start = date_start;
         sv.date_end = date_end;
