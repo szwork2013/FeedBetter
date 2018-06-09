@@ -128,19 +128,6 @@ void feedbetter::createsurvey(uint64_t survey_id,
         sv.gender = gender;
         sv.date_created = now();
     });
-    surveys svs3( _self, category );
-    svs3.emplace(_self, [&]( auto& sv) {
-        sv.id = svs3.available_primary_key();
-        sv.survey_id = survey_id;
-        sv.issuer = issuer;
-        sv.date_start = date_start;
-        sv.date_end = date_end;
-        sv.category = category;
-        sv.question = question;
-        sv.age = age;
-        sv.gender = gender;
-        sv.date_created = now();
-    });
 
     // Add answers
     surveyanss sas(_self, survey_id);
@@ -150,10 +137,25 @@ void feedbetter::createsurvey(uint64_t survey_id,
     while ((pos = answer.find(delimiter)) != string::npos) {
         token = answer.substr(0, pos);
 
+        string delimiter2 = "|!@#$%^&*()|";
+        size_t pos2 = 0;
+        string ans = "";
+        string img = "";
+        while ((pos2 = token.find(delimiter2)) != string::npos) {
+            if(ans == "") {
+                ans = token.substr(0, pos2);
+            } else {
+                img = token.substr(0, pos2);
+            }
+
+            token.erase(0, pos2 + delimiter2.length());
+        }
+
         sas.emplace(_self, [&]( auto& sa) {
             sa.id = sas.available_primary_key();
             sa.survey_id = survey_id;
-            sa.answer = token;
+            sa.answer = ans;
+            sa.image_link = img;
             sa.date_created = now();
         });
 
