@@ -32,7 +32,8 @@ public:
                     string       memo );
 
     // @abi action
-    void createsurvey(account_name issuer,
+    void createsurvey(uint64_t survey_id,
+                account_name issuer,
                 time date_start,
                 time date_end,
                 string content);
