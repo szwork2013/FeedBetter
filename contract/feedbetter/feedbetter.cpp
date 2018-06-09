@@ -95,7 +95,8 @@ void feedbetter::createsurvey(uint64_t survey_id,
 
     surveys svs( _self, survey_id );
     svs.emplace(_self, [&]( auto& sv) {
-        sv.id = survey_id;
+        sv.id = svs.available_primary_key();
+        sv.survey_id = survey_id;
         sv.issuer = issuer;
         sv.date_start = date_start;
         sv.date_end = date_end;
@@ -104,7 +105,8 @@ void feedbetter::createsurvey(uint64_t survey_id,
     });
     surveys svs2( _self, issuer );
     svs2.emplace(_self, [&]( auto& sv) {
-        sv.id = survey_id;
+        sv.id = svs2.available_primary_key();
+        sv.survey_id = survey_id;
         sv.issuer = issuer;
         sv.date_start = date_start;
         sv.date_end = date_end;

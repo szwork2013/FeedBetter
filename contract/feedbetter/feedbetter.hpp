@@ -90,6 +90,7 @@ private:
     // @abi table surveys i64
     struct survey {
         uint64_t      id;
+        uint64_t      survey_id;
         account_name  issuer;
         time          date_start;
         time          date_end;
@@ -98,7 +99,7 @@ private:
 
         uint64_t primary_key()const { return id; }
 
-        EOSLIB_SERIALIZE( survey, (id)(issuer)(content)(date_created) )
+        EOSLIB_SERIALIZE( survey, (id)(survey_id)(issuer)(date_start)(date_end)(content)(date_created) )
     };
 
     // @abi table surveyress i64
