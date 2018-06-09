@@ -241,12 +241,10 @@ void feedbetter::submitsurvey(account_name voter,
     eosio_assert( is_account( voter ), "voter account does not exist");
 
     surveys svs( _self, survey_id );
-    const auto& sv = svs.find( survey_id );
-    eosio_assert( sv != svs.end(), "survey doesn't exist" );
+    const auto& sv = svs.get( 0, "no survey object found" );
 
     surveyanss sas( _self, survey_id );
-    const auto& sa = sas.find( answer_id );
-    eosio_assert( sa != sas.end(), "survey answer_id doesn't exist" );
+    const auto& sa = sas.get( answer_id, "no answer object found" );
 
     surveyress srs( _self, survey_id );
     surveyress srs2( _self, voter );
@@ -269,7 +267,7 @@ void feedbetter::submitsurvey(account_name voter,
     });
 
     surveycharts scs( _self, survey_id );
-    const auto& chart = scs.get(survey_id, "no chart object found");
+    const auto& chart = scs.get(0, "no chart object found");
 
     scs.modify(chart, survey_id, [&]( auto& sc) {
         if(answer_id == 0) {
