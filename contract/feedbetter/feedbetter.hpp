@@ -40,7 +40,14 @@ public:
                 string question,
                 uint64_t age,
                 uint64_t gender,
-                string answer);
+                string answer1,
+                string image1,
+                string answer2,
+                string image2,
+                string answer3,
+                string image3,
+                string answer4,
+                string image4);
 
     // @abi action
     void submitsurvey(account_name voter,

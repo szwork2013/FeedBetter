@@ -87,7 +87,14 @@ void feedbetter::createsurvey(uint64_t survey_id,
                 string question,
                 uint64_t age,
                 uint64_t gender,
-                string answer)
+                string answer1,
+                string image1,
+                string answer2,
+                string image2,
+                string answer3,
+                string image3,
+                string answer4,
+                string image4)
 {
     require_auth(issuer);
     eosio_assert( is_account( issuer ), "issuer account does not exist");
@@ -99,7 +106,8 @@ void feedbetter::createsurvey(uint64_t survey_id,
     eosio_assert( question.size() > 0, "question can not be empty" );
     eosio_assert( age <= 4, "age can not be bigger than 4" );
     eosio_assert( gender <= 2, "age can not be bigger than 2" );
-    eosio_assert( answer.size() > 0, "question can not be empty" );
+    eosio_assert( answer1.size() > 0 && image1.size() > 0, "answer1 can not be empty" );
+    eosio_assert( answer2.size() > 0 && image2.size() > 0, "answer2 can not be empty" );
 
     // Add surveys
     surveys svs( _self, survey_id );
@@ -130,33 +138,14 @@ void feedbetter::createsurvey(uint64_t survey_id,
     });
 
     // Add answers
-    string delimiter = "/!@#$%^&*()/";
-    size_t pos = 0;
-    string token;
-    while ((pos = answer.find(delimiter)) != string::npos) {
-        token = answer.substr(0, pos);
-
-        string delimiter2 = "|!@#$%^&*()|";
-        size_t pos2 = 0;
-        string ans = "";
-        string img = "";
-        while ((pos2 = token.find(delimiter2)) != string::npos) {
-            if(ans == "") {
-                ans = token.substr(0, pos2);
-            } else {
-                img = token.substr(0, pos2);
-            }
-
-            token.erase(0, pos2 + delimiter2.length());
-        }
-
+    if (image1.size() > 0 && answer1.size() > 0) {
         surveyanss sas(_self, survey_id);
         sas.emplace(_self, [&]( auto& sa) {
             sa.id = sas.available_primary_key();
             sa.survey_id = survey_id;
             sa.issuer = issuer;
-            sa.answer = ans;
-            sa.image_link = img;
+            sa.answer = answer1;
+            sa.image_link = image1;
             sa.date_created = now();
         });
         surveyanss sas2(_self, issuer);
@@ -164,12 +153,70 @@ void feedbetter::createsurvey(uint64_t survey_id,
             sa.id = sas2.available_primary_key();
             sa.survey_id = survey_id;
             sa.issuer = issuer;
-            sa.answer = ans;
-            sa.image_link = img;
+            sa.answer = answer1;
+            sa.image_link = image1;
             sa.date_created = now();
         });
-
-        answer.erase(0, pos + delimiter.length());
+    }
+    if (image2.size() > 0 && answer2.size() > 0) {
+        surveyanss sas(_self, survey_id);
+        sas.emplace(_self, [&]( auto& sa) {
+            sa.id = sas.available_primary_key();
+            sa.survey_id = survey_id;
+            sa.issuer = issuer;
+            sa.answer = answer2;
+            sa.image_link = image2;
+            sa.date_created = now();
+        });
+        surveyanss sas2(_self, issuer);
+        sas2.emplace(_self, [&]( auto& sa) {
+            sa.id = sas2.available_primary_key();
+            sa.survey_id = survey_id;
+            sa.issuer = issuer;
+            sa.answer = answer2;
+            sa.image_link = image2;
+            sa.date_created = now();
+        });
+    }
+    if (image3.size() > 0 && answer3.size() > 0) {
+        surveyanss sas(_self, survey_id);
+        sas.emplace(_self, [&]( auto& sa) {
+            sa.id = sas.available_primary_key();
+            sa.survey_id = survey_id;
+            sa.issuer = issuer;
+            sa.answer = answer3;
+            sa.image_link = image3;
+            sa.date_created = now();
+        });
+        surveyanss sas2(_self, issuer);
+        sas2.emplace(_self, [&]( auto& sa) {
+            sa.id = sas2.available_primary_key();
+            sa.survey_id = survey_id;
+            sa.issuer = issuer;
+            sa.answer = answer3;
+            sa.image_link = image3;
+            sa.date_created = now();
+        });
+    }
+    if (image4.size() > 0 && answer4.size() > 0) {
+        surveyanss sas(_self, survey_id);
+        sas.emplace(_self, [&]( auto& sa) {
+            sa.id = sas.available_primary_key();
+            sa.survey_id = survey_id;
+            sa.issuer = issuer;
+            sa.answer = answer4;
+            sa.image_link = image4;
+            sa.date_created = now();
+        });
+        surveyanss sas2(_self, issuer);
+        sas2.emplace(_self, [&]( auto& sa) {
+            sa.id = sas2.available_primary_key();
+            sa.survey_id = survey_id;
+            sa.issuer = issuer;
+            sa.answer = answer4;
+            sa.image_link = image4;
+            sa.date_created = now();
+        });
     }
 }
 
