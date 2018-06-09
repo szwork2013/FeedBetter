@@ -8972,7 +8972,7 @@
      (get_local $9)
      (i32.const 8)
     )
-    (get_local $1)
+    (i64.const 0)
     (i32.const 224)
    )
   )

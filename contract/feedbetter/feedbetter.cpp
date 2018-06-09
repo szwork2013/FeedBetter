@@ -272,7 +272,7 @@ void feedbetter::submitsurvey(account_name voter,
     });
 
     surveycharts scs( _self, survey_id );
-    const auto& chart = scs.get(survey_id, "no chart..");
+    const auto& chart = scs.get(0, "no chart..");
 
     scs.modify(chart, _self, [&]( auto& sc) {
         if(answer_id == 0) {
