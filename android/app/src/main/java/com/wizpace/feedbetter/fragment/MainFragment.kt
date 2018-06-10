@@ -20,6 +20,7 @@ import rx.Subscription
 
 class MainFragment : RxRecyclerFragment() {
     var timer: Subscription? = null
+    var timer2: Subscription? = null
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,12 +28,18 @@ class MainFragment : RxRecyclerFragment() {
         CSRoot.get().fetchTxList()
         CSRoot.get().fetchUser()
 
-        timer = forever(1000L, {
+        timer = forever(2000L, {
             if (activity != null) {
                 CSRoot.get().fetchTxList()
-                CSRoot.get().fetchUser()
             } else {
                 timer!!.unsubscribe()
+            }
+        })
+        timer2 = forever(3000L, {
+            if (activity != null) {
+                CSRoot.get().fetchUser()
+            } else {
+                timer2!!.unsubscribe()
             }
         })
     }

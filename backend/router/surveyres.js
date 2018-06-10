@@ -15,21 +15,25 @@ module.exports = function(router) {
 		const survey_id = parseInt(req.body['survey_id']);
 		const answer_id = parseInt(req.body['answer_id']);
 
+		console.log('start', new Date());
 		contract.submitsurvey(req.eos, voter, survey_id, answer_id, function() {
-			contract.getSurveyChart(req.eos, survey_id, function(chart) {
-				if(chart.rows.length > 0) {
-					delete chart.rows[0]['id'];
-					delete chart.rows[0]['survey_id'];
-					delete chart.rows[0]['date_created'];
-					delete chart.rows[0]['issuer'];
+			console.log('submit survey', new Date());
+		});
+		contract.send(req.eos, 'feedbetter', voter, 3, 'survey|survey', function() {
+			console.log('send', new Date());
+		});
+		contract.getSurveyChart(req.eos, survey_id, function(chart) {
+			console.log('get chart', new Date());
+			if(chart.rows.length > 0) {
+				delete chart.rows[0]['id'];
+				delete chart.rows[0]['survey_id'];
+				delete chart.rows[0]['date_created'];
+				delete chart.rows[0]['issuer'];
 
-					contract.send(req.eos, 'feedbetter', voter, 3, 'survey|survey', function() {
-						req.response(chart.rows[0]);
-					});
-				} else {
-					req.response();
-				}
-			});
+				req.response(chart.rows[0]);
+			} else {
+				req.response();
+			}
 		});
 	});
 

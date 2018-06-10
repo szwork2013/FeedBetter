@@ -88,6 +88,7 @@ module.exports = function(router) {
 
 	router.get('/transaction', function(req, res) {
 		contract.getTransactions(req.eos, req.user.user_wallet_address, function(row) {
+			console.log('get txs', new Date());
 			if(row.rows) {
 				for (var i = row.rows.length - 1; i >= 0; i--) {
 					row.rows[i]['quantity_array'] = covertQuantityToArray(row.rows[i]['quantity']);
@@ -107,8 +108,8 @@ module.exports = function(router) {
 		const quantity = req.body['amount'];
 		const memo = sender + ' send ' + quantity + ' to ' + to;
 		contract.send(req.eos, sender, to, quantity, memo, function() {
-			req.response('ok');
 		});
+		req.response('ok');
 	});
 
 	router.post('/survey', upload.array(), function(req, res) {
@@ -117,8 +118,8 @@ module.exports = function(router) {
 		const answer = req.body['answer'];
 
 		contract.submitsurvey(req.eos, voter, survey_id, answer, function() {
-			req.response('ok');
 		});
+		req.response('ok');
 	});
 
 	return router;

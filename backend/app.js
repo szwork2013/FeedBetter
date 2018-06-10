@@ -26,7 +26,7 @@ const binaryen = require('binaryen')
 const Eos = require('eosjs');
 const eos = Eos({
 	chainId: '706a7ddd808de9fc2b8879904f3b392256c83104c1d544b38302cc07d9fca477',
-	httpEndpoint: 'http://13.209.67.213:8888',
+	httpEndpoint: 'http://13.125.208.55:8888',
 	keyProvider: ['5JtgfN7Gzcv5b3Dqb3JiJvsgLSPGV8Yw75NNkRaR33Hn3oE4FEx'],
 	debug: false,
 	sign: true,

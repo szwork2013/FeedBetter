@@ -178,6 +178,7 @@ class APIClient {
     companion object {
         private var instance: APIClient? = null
         const val BASE_URL = "http://10.101.2.102:8943"
+//        const val BASE_URL = "http://172.20.10.3:8943"
 
         fun get(): APIClient {
             if (instance == null) {

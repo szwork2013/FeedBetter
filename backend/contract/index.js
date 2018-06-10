@@ -15,7 +15,7 @@ function getTableRowById(eos, table, key, id, func) {
 }
 
 function getTableRows(eos, table, key, func) {
-	eos.getTableRows({json:true, scope: key, code: contract_name, table: table, limit:100})
+	eos.getTableRows({json:true, scope: key, code: contract_name, table: table, limit:1000})
 		.then(res => {
 			func(res);
 		});
